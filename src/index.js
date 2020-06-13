@@ -9,25 +9,88 @@ const colName = "depoimento";
 
 
 
+const client = new MongoClient(url);
+
 app.use(bodyParser.json());
 
 app.get('/depoimentos', (req, res, next)=>{
   async function run(){
     try{
        await client.connect();
+       const db = client.db(dbName);
+       const col =  db.collection(colName);
+       const resposta = await col.find().toArray();
+       res.send(resposta);
     }catch(err){
       console.error('Erro: '+err.stack);
-    }finally {
-      await client.close();
     }
   }
   run().catch(console.dir);
 });
 
-app.get('/depoimentos/:id', (req, res, next) =>{
-  let id = req.params.id;
 
+
+
+app.get('/depoimentos/nomes', (req, res, next)=>{
+  async function run(){
+    try{
+       await client.connect();
+       const db = client.db(dbName);
+       const col =  db.collection(colName);
+       const resposta = await col.distinct("nome");
+       res.send(resposta);
+    }catch(err){
+      console.error('Erro: '+err.stack);
+    }
+  }
+  run().catch(console.dir);
 });
+app.get('/depoimentos/nomes/:nome', (req, res, next)=>{
+  var nome = req.params.nome;
+  async function run(){
+    try{
+       await client.connect();
+       const db = client.db(dbName);
+       const col =  db.collection(colName);
+       const resposta = await col.find({"nome":  nome});
+       res.send(resposta);
+    }catch(err){
+      console.error('Erro: '+err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
+
+app.get('/depoimentos/emails', (req, res, next)=>{
+  async function run(){
+    try{
+       await client.connect();
+       const db = client.db(dbName);
+       const col =  db.collection(colName);
+       const resposta = await col.distinct("email");
+       res.send(resposta);
+    }catch(err){
+      console.error('Erro: '+err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
+app.get('/depoimentos/email/:email', (req, res, next)=>{
+  var email = req.params.email;
+  async function run(){
+    try{
+       await client.connect();
+       const db = client.db(dbName);
+       const col =  db.collection(colName);
+       const resposta = await col.find({"email": email});
+       res.send(resposta);
+    }catch(err){
+      console.error('Erro: '+err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
+
 
 app.put('/depoimentos/:id', (req, res, next) =>{
   let id = req.params.id;
@@ -40,23 +103,19 @@ app.delete('/depoimentos/:id', (req, res, next) =>{
 
 app.post('/depoimentos', (req, res, next)=>{
   let requisicao = req.body;
-  const mongoClient = new MongoClient(url);
   async function run(){
     try{
        await client.connect();
        const db = client.db(dbName);
        const col =  db.collection(colName);
        const p = await col.insertOne(requisicao);
-       const resposta = await col.find();
+       const resposta = await col.findOne();
        res.send(resposta);
     }catch(err){
       console.error('Erro: '+err.stack);
-    }finally {
-      await client.close();
     }
   }
   run().catch(console.dir);
-  mongoClient.close();
 });
 
 
