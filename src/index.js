@@ -2,12 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const { MongoClient } = require('mongodb');
+const { JWT } require('jose');
 
 const url = "mongodb+srv://gusleaooliveira:65s-xtfuDTGH-Qj@cluster0-twwyw.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const dbName = "api_mrconstrucoes";
 const colName = "depoimento";
-
-
 
 const client = new MongoClient(url);
 
@@ -75,7 +74,7 @@ app.get('/depoimentos/emails', (req, res, next)=>{
   }
   run().catch(console.dir);
 });
-app.get('/depoimentos/email/:email', (req, res, next)=>{
+app.get('/depoimentos/emails/:email', (req, res, next)=>{
   var email = req.params.email;
   async function run(){
     try{
