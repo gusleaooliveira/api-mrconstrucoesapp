@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const { MongoClient, ObjectId } = require('mongodb');
+const cors = require('cors');
 
 const url = "mongodb+srv://gusleaooliveira:65s-xtfuDTGH-Qj@cluster0-twwyw.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const dbName = "api_mrconstrucoes";
@@ -12,6 +13,7 @@ const colImage = "imagem";
 const client = new MongoClient(url);
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.post('/imagens', (req, res, next)=>{
   let requisicao = req.body;
