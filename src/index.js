@@ -18,13 +18,15 @@ app.use(cors());
 
 app.post("/imagens", (req, res, next) => {
   let requisicao = req.body;
+  console.log(requisicao);
+  
   async function run() {
     try {
       await client.connect();
       const db = client.db(dbName);
       const col = db.collection(colImage);
       const p = await col.insertOne(requisicao);
-      res.sendStatus(200);
+      res.send(requisicao);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
