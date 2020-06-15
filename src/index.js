@@ -26,7 +26,7 @@ app.post("/imagens", (req, res, next) => {
       const db = client.db(dbName);
       const col = db.collection(colImage);
       const p = await col.insertOne(requisicao);
-      res.send(requisicao);
+      res.send("error");
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
