@@ -75,6 +75,21 @@ app.delete("/imagens/:id", (req, res, next) => {
   }
   run().catch(console.dir);
 });
+app.get("/imagens/minimo", (req, res, next) => {
+  async function run() {
+    try {
+      await client.connect();
+      const db = client.db(dbName);
+      const col = db.collection(colImage);
+      const resposta = await col.find({ tamanho: "minimo" }).toArray();
+      console.log(resposta);
+      res.send(resposta);
+    } catch (err) {
+      console.log("Erro: " + err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
 
 app.get("/imagens/pequeno", (req, res, next) => {
   async function run() {
