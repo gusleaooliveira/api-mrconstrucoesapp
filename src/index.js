@@ -24,8 +24,7 @@ app.post("/imagens", (req, res, next) => {
       const db = client.db(dbName);
       const col = db.collection(colImage);
       const p = await col.insertOne(requisicao);
-      const resposta = await col.findOne();
-      res.send(resposta);
+      res.sendStatus(200);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
@@ -47,8 +46,7 @@ app.put("/imagens", (req, res, next) => {
         tamanho: requisicao.tamanho,
         imagem: requisicao.imagem,
       });
-      console.log(resposta);
-      res.send(resposta);
+      res.sendStatus(200);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
@@ -230,8 +228,7 @@ app.post("/depoimentos", (req, res, next) => {
       const db = client.db(dbName);
       const col = db.collection(colName);
       const p = await col.insertOne(requisicao);
-      const resposta = await col.findOne();
-      res.send(resposta);
+      res.sendStatus(200);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
