@@ -17,16 +17,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/imagens", (req, res, next) => {
-  let requisicao = req.body;
-  console.log(requisicao);
-  
+  let requisicao = req.body;  
   async function run() {
     try {
       await client.connect();
       const db = client.db(dbName);
       const col = db.collection(colImage);
       const p = await col.insertOne(requisicao);
-      res.sendStatus(200);
+      res.send(p);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
