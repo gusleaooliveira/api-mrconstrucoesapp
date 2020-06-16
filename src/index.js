@@ -18,6 +18,30 @@ app.use(cors());
 
 app.post("/imagens", (req, res, next) => {
   let requisicao = req.body;  
+  console.error('------------------------------------');
+  console.error('Requisição: {'+JSON.stringify(requisicao)+'}');
+  console.error('------------------------------------');
+   
+
+  async function run() {
+    try {
+      await client.connect();
+      const db = client.db(dbName);
+      const col = db.collection(colImage);
+      const p = await col.insertOne(requisicao);
+      res.sendStatus(200);
+    } catch (err) {
+      console.error("Erro: " + err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
+
+app.post("/imagens", (req, res, next) => {
+  let requisicao = req.body;  
+  console.log(requisicao);
+  
+  
   async function run() {
     try {
       await client.connect();
@@ -31,6 +55,8 @@ app.post("/imagens", (req, res, next) => {
   }
   run().catch(console.dir);
 });
+
+
 
 app.put("/imagens", (req, res, next) => {
   let requisicao = req.body;
@@ -65,14 +91,29 @@ app.delete("/imagens/:id", (req, res, next) => {
         .find({ _id: ObjectId(String(requisicao)) })
         .toArray();
       const resposta = await col.deleteOne(pre[0]);
-      console.log(resposta);
-      res.send(resposta);
+      res.sendStatus(200);
     } catch (err) {
       console.error("Erro: " + err.stack);
     }
   }
   run().catch(console.dir);
 });
+
+app.get("/imagens", (req, res, next) => {
+  async function run() {
+    try {
+      await client.connect();
+      const db = client.db(dbName);
+      const col = db.collection(colImage);
+      const resposta = await col.find({}).toArray();
+      res.send(resposta);
+    } catch (err) {
+      console.log("Erro: " + err.stack);
+    }
+  }
+  run().catch(console.dir);
+});
+
 app.get("/imagens/minimo", (req, res, next) => {
   async function run() {
     try {
