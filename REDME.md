@@ -22,8 +22,8 @@ Mandar e receber os dados com o `jwt`.
 ## Checklist
 - [ ] Crud de dados em todas das urls
 - [ ] Retorno em formato json das urls
-- [ x ] Hospedagem funcionando
-- [ x ] Execução da api funcionando
+- [x] Hospedagem funcionando
+- [x] Execução da api funcionando
 - [ ] Frontend utilizado o mesmo da matéria de dispositivos mobile, localizados [aqui](https://gusleaooliveira.github.io/MRConstrucaoApp/).
 
 ### Extras
